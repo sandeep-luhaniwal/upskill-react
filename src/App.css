@@ -1,3 +1,26 @@
 .hide::-webkit-scrollbar {
     display: none;
 }
+
+.border-gradient {
+    border-image: linear-gradient(45deg, #ff6b6b, #f09433, #f9d423) 1;
+    animation: abc 5s linear infinite;
+}
+
+@keyframes abc {
+    0% {
+        border-image: linear-gradient(45deg, #ff6b6b, #f09433, #f9d423) 1;
+    }
+
+    33% {
+        border-image: linear-gradient(45deg, #ff6b6b, #333ff0, #0980c5) 1;
+    }
+
+    66% {
+        border-image: linear-gradient(45deg, #76bd04, #b90b0b, #db2209) 1;
+    }
+
+    100% {
+        border-image: linear-gradient(45deg, #ff6b6b, #f09433, #f9d423) 1;
+    }
+}
