@@ -8,9 +8,19 @@ const CardsBuy = () => {
 
   const addToCart = (product) => {
     const updatedCart = [...cart];
-    updatedCart.push({ ...product, quantity: 1 }); // Add product with initial quantity 1
+    const existingProductIndex = updatedCart.findIndex(item => item.tital === product.tital);
+
+    if (existingProductIndex !== -1) {
+      // If product already exists in cart, increase the quantity
+      updatedCart[existingProductIndex].quantity += 1;
+      setTotal(total + Number(updatedCart[existingProductIndex].rate)); // Update total price
+    } else {
+      // Add new product with initial quantity 1
+      updatedCart.push({ ...product, quantity: 1 });
+      setTotal(total + Number(product.rate)); // Update total price
+    }
+
     setCart(updatedCart);
-    setTotal(total + Number(product.rate)); // Update total price
   };
 
   const increaseQuantity = (index) => {

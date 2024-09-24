@@ -137,35 +137,35 @@ export const BEST_SELLING_CARD_LIST = [
     },
 
     {
-        tital: "The north coat",
+        tital: "The wash",
         image: coat,
-        rate:"260",
+        rate:"560",
         netrate:"360",
         icon:<HartIocn />,
     },
     {
-        tital: "Gucci duffle bag",
+        tital: "Gucci big bag",
         // icon: <PhoneIcon />,
         image:bag,
-          rate:"960",
+        rate:"860",
         netrate:"1160",
         StarIcon:<HalfStarIcon />
 
     },
     {
-        tital: "RGB liquid CPU Cooler",
+        tital: "RGB liquid  Cooler",
         // icon: <PhoneIcon />,
           image:spkr,
           abc: "pt-10",
-            rate:"160",
+            rate:"60",
         netrate:"170"
 
     },
     {
-        tital: "Small BookSelf",
+        tital: "Small bag BookSelf",
         // icon: <PhoneIcon />,
           image:book,
-            rate:"360",
+            rate:"660",
             netrate:"400"
     },
 

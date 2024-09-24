@@ -10,7 +10,7 @@ function App() {
     <div className='overflow-clip'>
       <NavBar />
       <CardsBuy />
-      {/* <Footer /> */}
+
     </div>
   );
 }
