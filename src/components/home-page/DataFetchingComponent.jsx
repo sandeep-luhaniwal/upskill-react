@@ -6,21 +6,31 @@ const DataFetchingComponent = () => {
     const url = 'https://jsonplaceholder.typicode.com/photos';
     const { data, loading, error } = useFetch(url);
 
-    if (loading) return <p>Loading...</p>;
-    if (error) return <p>Error: {error.message}</p>;
-
-    // Make sure `data` is an array before attempting to map it
+    if (loading) return (
+        <div className='min-h-screen bg-black flex justify-center items-center'>
+            <p className='text-white text-2xl'>Loading...</p>
+        </div>
+    );
+    if (error) return (
+        <div className='min-h-screen bg-black flex justify-center items-center'>
+            <p className='text-white text-2xl'>{error.message}</p>
+        </div>
+    );
     if (!Array.isArray(data)) {
-        return <p>No data available.</p>;
+        return (
+            <div className='min-h-screen bg-black flex justify-center items-center'>
+                <p className='text-white text-2xl'>No data available.</p>
+            </div>
+        );
     }
 
     return (
-        <div className='bg-black'>
+        <div className='bg-black min-h-screen py-3'>
             <div className='max-w-[1200px] mx-auto px-4'>
-                <Link to={"https://github.com/sandeep-luhaniwal/upskill-react"} className='text-center py-6 text-2xl text-white font-bold'>Github Link</Link>
-                <h1 className='text-center py-6 text-2xl text-white font-bold'>Photo Gallery</h1>
+                <Link to={"https://github.com/sandeep-luhaniwal/upskill-react/tree/gallery"} className='text-center py-6 text-2xl text-white font-bold'>Github Link</Link>
+                <h1 className='text-center py-6 text-2xl text-white font-bold'>Photos</h1>
                 <div className='grid grid-cols-4 gap-5'>
-                    {data.slice(0, 30).map((item) => (
+                    {data.slice(0, 80).map((item) => (
                         <div key={item.id} className='border border-white p-3'>
                             <div className='flex justify-center'>
                                 <img src={item.thumbnailUrl} alt={item.title} />
