@@ -6,10 +6,14 @@ import image_three from '../../assets/images/home-page/png/Gms.png'
 import image_four from '../../assets/images/home-page/png/Chair.png'
 import image_five from '../../assets/images/home-page/png/cmr.png'
 import image_six from '../../assets/images/home-page/png/LED.png'
+import { Link } from 'react-router-dom'
 
 const PropsPage = () => {
     return (
         <div className='max-w-[1200px] px-4 xl:px-0 mx-auto'>
+            <div className='py-5'>
+                <Link to={"https://github.com/sandeep-luhaniwal/upskill-react"} target='_blank' className='text-2xl my-5'>Github Link</Link>
+            </div>
             <div className="grid grid-cols-3 gap-8">
                 <PropsCard title={"1"} image={image_two} />
                 <PropsCard title={"2"} image={image_one} />
