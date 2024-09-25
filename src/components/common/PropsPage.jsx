@@ -12,7 +12,7 @@ const PropsPage = () => {
     return (
         <div className='max-w-[1200px] px-4 xl:px-0 mx-auto'>
             <div className='py-5'>
-                <Link to={"https://github.com/sandeep-luhaniwal/upskill-react"} target='_blank' className='text-2xl my-5'>Github Link</Link>
+                <Link hidden to={"https://github.com/sandeep-luhaniwal/upskill-react"} target='_blank' className='text-2xl my-5'>Github Link</Link>
             </div>
             <div className="grid grid-cols-3 gap-8">
                 <PropsCard title={"1"} image={image_two} />

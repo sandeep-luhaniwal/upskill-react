@@ -27,7 +27,7 @@ const DataFetchingComponent = () => {
     return (
         <div className='bg-black min-h-screen py-3'>
             <div className='max-w-[1200px] mx-auto px-4'>
-                <Link to={"https://github.com/sandeep-luhaniwal/upskill-react/tree/gallery"} className='text-center py-6 text-2xl text-white font-bold'>Github Link</Link>
+                <Link hidden to={"https://github.com/sandeep-luhaniwal/upskill-react/tree/gallery"} className='text-center py-6 text-2xl text-white font-bold'>Github Link</Link>
                 <h1 className='text-center py-6 text-2xl text-white font-bold'>Photos</h1>
                 <div className='grid grid-cols-4 gap-5'>
                     {data.slice(0, 80).map((item) => (

@@ -22,16 +22,26 @@ import Mobile from '../../assets/images/home-page/png/Mobile.png'
 export const NAVBAR_LINKS_LIST = [
     {
         title: "Home",
+        url: "/",
     },
     {
-        title: "Contact",
-    },
-    {
-        title: "About",
+        title: "Photos",
+        url: "/photos",
     },
     {
         title: "Sign Up",
+        url: "/sign-up",
     },
+    {
+        title: "Sign In",
+        url: "/sign-in",
+    },
+    
+    {
+        title: "GitHub Link",
+        url: "/github",
+    },
+    
 ];
 
 export const DELIVERY_DATA_LIST = [
