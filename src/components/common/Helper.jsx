@@ -168,6 +168,13 @@ export const BEST_SELLING_CARD_LIST = [
             rate:"660",
             netrate:"400"
     },
+    {
+        tital: "Table Book",
+        // icon: <PhoneIcon />,
+          image:book,
+            rate:"1090",
+            netrate:"900"
+    },
 
 ]
 

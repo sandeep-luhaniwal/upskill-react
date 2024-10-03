@@ -1,10 +1,11 @@
-import React, { useState } from 'react';
+import React, { useContext, useState } from 'react';
 import { BEST_SELLING_CARD_LIST } from '../common/Helper';
 import PrimaryButton from '../common/PrimaryButton';
+import UserContext from '../../context/UserContext';
+import { Link } from 'react-router-dom';
 
 const CardsBuy = () => {
-  const [cart, setCart] = useState([]);
-  const [total, setTotal] = useState(0);
+  const { total, setTotal, cart, setCart } = useContext(UserContext)
 
   const addToCart = (product) => {
     const updatedCart = [...cart];
@@ -91,7 +92,10 @@ const CardsBuy = () => {
                 ))
               )}
             </div>
-            <p className="text-white pt-5">Total: Rs. {total}</p>
+            <p className="text-white py-5">Total: Rs. {total}</p>
+            <div className='mt-1'>
+              <Link to={"/payment"} className='bg-white px-10 py-3 text-center'>Buy Now</Link>
+            </div>
           </div>
         </div>
       </div>
