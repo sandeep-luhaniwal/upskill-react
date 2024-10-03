@@ -1,7 +1,7 @@
-# Getting Live link phot gallary
+# api link add
 
 Live Link Page props
 
 
 
-https://upskill-react-props.vercel.app/
+https://api-set-react.vercel.app/
