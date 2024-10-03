@@ -8,19 +8,15 @@ import CardsBuy from './components/home-page/CardsBuy';
 import PropsCard from './components/home-page/PropsCard';
 import PropsPage from './components/common/PropsPage';
 import UserContextProvider from './context/UserContextProvider';
-import { Router, Routes } from 'react-router-dom';
 function App() {
   return (
     <div className='overflow-clip'>
-      <UserContextProvider>
-        <NavBar />
-        <CardsBuy />
-        {/* <PropsPage /> */}
-        <Routes>
-          <Router elemnt/>
-        </Routes>
+     <UserContextProvider>
+     <NavBar />
+      <CardsBuy />
+      {/* <PropsPage /> */}
 
-      </UserContextProvider>
-    </div>);
+     </UserContextProvider>
+    </div> );
 }
 export default App;

@@ -2,11 +2,13 @@ import React, { useContext, useState } from 'react';
 import { BEST_SELLING_CARD_LIST } from '../common/Helper';
 import PrimaryButton from '../common/PrimaryButton';
 import UserContext from '../../context/UserContext';
-import { Link } from 'react-router-dom';
+import { Link, Route, Routes, useNavigate } from 'react-router-dom';
+import DisplayShoes from './DisplayShoes';
+import Payment from './Payment';
 
 const CardsBuy = () => {
-  const { total, setTotal, cart, setCart } = useContext(UserContext)
-
+  const { total, setTotal, cart, setCart, valueChange, setValueChange } = useContext(UserContext)
+  const navigate = useNavigate();
   const addToCart = (product) => {
     const updatedCart = [...cart];
     const existingProductIndex = updatedCart.findIndex(item => item.tital === product.tital);
@@ -43,29 +45,27 @@ const CardsBuy = () => {
     setCart(updatedCart);
   };
 
+  const handleClick = () => {
+    if (cart.length > 0) {  // Ensure cart has items before proceeding
+      setValueChange(!valueChange);
+      if (!valueChange) {
+        navigate('/payment');
+      } else {
+        navigate('/');
+      }
+    }
+  };
+
   return (
     <div className='max-w-[1170px] mx-auto px-4 xl:px-0 py-10 relative'>
       <div className="flex justify-between">
         {/* Displaying shoes */}
-        <div className="w-[70%] grid grid-cols-3 gap-6">
-          {BEST_SELLING_CARD_LIST.map((obj, i) => {
-            return (
-              <div key={i} className='bg-gray-200'>
-                <div className="h-[200px] overflow-hidden p-3 flex items-center justify-center">
-                  <img src={obj.image} alt="shoe" className='w-[70%] object-cover' />
-                </div>
-                <div className="bg-black p-3 pb-5">
-                  <p className='text-white text-xl font-bold'>{obj.tital}</p>
-                  <p className='text-white py-2'>Rs. {obj.rate}</p>
-                  <div className="flex justify-center mt-3">
-                    <PrimaryButton onclick={() => addToCart(obj)}>Add to Cart</PrimaryButton>
-                  </div>
-                </div>
-              </div>
-            );
-          })}
+        <div className="w-[70%]">
+          <Routes>
+            <Route path='/' element={<DisplayShoes addToCart={addToCart} />} />
+            <Route path='/payment' element={<Payment />} />
+          </Routes>
         </div>
-
         {/* Shopping Cart */}
         <div className="w-[28%] fixed right-10 top-[120px] z-50">
           <div className="bg-black p-3 pb-5 rounded-md">
@@ -94,7 +94,7 @@ const CardsBuy = () => {
             </div>
             <p className="text-white py-5">Total: Rs. {total}</p>
             <div className='mt-1'>
-              <Link to={"/payment"} className='bg-white px-10 py-3 text-center'>Buy Now</Link>
+              <p onClick={handleClick} className='bg-white cursor-pointer px-10 py-3 text-center'>{valueChange ? "Go back to shopping" : "Buy Now"}</p>
             </div>
           </div>
         </div>
