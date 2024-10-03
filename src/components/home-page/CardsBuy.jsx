@@ -1,57 +1,26 @@
-import React, { useContext, useState } from 'react';
-import { BEST_SELLING_CARD_LIST } from '../common/Helper';
-import PrimaryButton from '../common/PrimaryButton';
-import UserContext from '../../context/UserContext';
-import { Link, Route, Routes, useNavigate } from 'react-router-dom';
+import React, { useState } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { increaseQuantity, decreaseQuantity } from '../../redux/cartSlice';
+import { Route, Routes, useNavigate } from 'react-router-dom';
 import DisplayShoes from './DisplayShoes';
 import Payment from './Payment';
 
 const CardsBuy = () => {
-  const { total, setTotal, cart, setCart, valueChange, setValueChange } = useContext(UserContext)
+  const dispatch = useDispatch();
+  const { cart, total } = useSelector((state) => state.cart);
   const navigate = useNavigate();
-  const addToCart = (product) => {
-    const updatedCart = [...cart];
-    const existingProductIndex = updatedCart.findIndex(item => item.tital === product.tital);
 
-    if (existingProductIndex !== -1) {
-      // If product already exists in cart, increase the quantity
-      updatedCart[existingProductIndex].quantity += 1;
-      setTotal(total + Number(updatedCart[existingProductIndex].rate)); // Update total price
-    } else {
-      // Add new product with initial quantity 1
-      updatedCart.push({ ...product, quantity: 1 });
-      setTotal(total + Number(product.rate)); // Update total price
-    }
+  // State to track whether the user is currently in payment mode
+  const [isInPaymentMode, setIsInPaymentMode] = useState(false);
 
-    setCart(updatedCart);
-  };
-
-  const increaseQuantity = (index) => {
-    const updatedCart = [...cart];
-    updatedCart[index].quantity += 1;
-    setCart(updatedCart);
-    setTotal(total + Number(updatedCart[index].rate)); // Increase total price
-  };
-
-  const decreaseQuantity = (index) => {
-    const updatedCart = [...cart];
-    if (updatedCart[index].quantity > 1) {
-      updatedCart[index].quantity -= 1;
-      setTotal(total - Number(updatedCart[index].rate)); // Decrease total price
-    } else {
-      setTotal(total - Number(updatedCart[index].rate)); // Decrease total price
-      updatedCart.splice(index, 1); // Remove product from cart if quantity is 0
-    }
-    setCart(updatedCart);
-  };
-
-  const handleClick = () => {
-    if (cart.length > 0) {  // Ensure cart has items before proceeding
-      setValueChange(!valueChange);
-      if (!valueChange) {
-        navigate('/payment');
-      } else {
+  const handleBuyNow = () => {
+    if (cart.length > 0) {
+      if (isInPaymentMode) {
         navigate('/');
+        setIsInPaymentMode(false);// Navigate back to shopping if already in payment mode
+      } else {
+        setIsInPaymentMode(true); // Set to payment mode
+        navigate('/payment'); // Navigate to payment page
       }
     }
   };
@@ -62,7 +31,7 @@ const CardsBuy = () => {
         {/* Displaying shoes */}
         <div className="w-[70%]">
           <Routes>
-            <Route path='/' element={<DisplayShoes addToCart={addToCart} />} />
+            <Route path='/' element={<DisplayShoes />} />
             <Route path='/payment' element={<Payment />} />
           </Routes>
         </div>
@@ -84,9 +53,9 @@ const CardsBuy = () => {
                       </div>
                     </div>
                     <div className="flex items-center gap-1">
-                      <p className='text-base font-bold p-1 bg-gray-600 text-white cursor-pointer' onClick={() => decreaseQuantity(index)}>-</p>
+                      <p className='text-base font-bold p-1 bg-gray-600 text-white cursor-pointer' onClick={() => dispatch(decreaseQuantity(index))}>-</p>
                       <p className='text-base p-1 bg-gray-600 text-white cursor-pointer'>{item.quantity}</p>
-                      <p className='text-base font-bold p-1 bg-gray-600 text-white cursor-pointer' onClick={() => increaseQuantity(index)}>+</p>
+                      <p className='text-base font-bold p-1 bg-gray-600 text-white cursor-pointer' onClick={() => dispatch(increaseQuantity(index))}>+</p>
                     </div>
                   </div>
                 ))
@@ -94,7 +63,9 @@ const CardsBuy = () => {
             </div>
             <p className="text-white py-5">Total: Rs. {total}</p>
             <div className='mt-1'>
-              <p onClick={handleClick} className='bg-white cursor-pointer px-10 py-3 text-center'>{valueChange ? "Go back to shopping" : "Buy Now"}</p>
+              <p onClick={handleBuyNow} className='bg-white cursor-pointer px-10 py-3 text-center'>
+                {isInPaymentMode ? "Go back to shopping" : "Buy Now"}
+              </p>
             </div>
           </div>
         </div>
