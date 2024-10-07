@@ -1,61 +1,52 @@
 import { createSlice } from '@reduxjs/toolkit';
 
 const initialState = {
-  cart: [],  // Array to hold cart items
-  total: 0,  // Holds total price of the items in the cart
+  cart: [],
+  total: 0,
 };
 
-export const cartSlice = createSlice({
-  name: 'cart',  // Name of the slice
-  initialState,  // Initial state of the slice
+const cartSlice = createSlice({
+  name: 'cart',
+  initialState,
   reducers: {
-    // Add a product to the cart or update quantity if it already exists
+    // Add to cart or increase quantity if item exists
     addToCart: (state, action) => {
-      const product = action.payload;  // The product being added
-      const existingProductIndex = state.cart.findIndex(item => item.title === product.title);  // Check if product already exists in the cart
+      const existingItem = state.cart.find((item) => item.tital === action.payload.tital);
+      const rate = Number(action.payload.rate); // Ensure rate is treated as a number
 
-      if (existingProductIndex !== -1) {
-        // If the product already exists, increase its quantity and update the total
-        state.cart[existingProductIndex].quantity += 1;
-        state.total += Number(state.cart[existingProductIndex].rate);
+      if (existingItem) {
+        existingItem.quantity += 1;
       } else {
-        // If the product does not exist in the cart, add it and update the total
-        state.cart.push({ ...product, quantity: 1 });
-        state.total += Number(product.rate);
+        state.cart.push({ ...action.payload, quantity: 1 });
       }
+      state.total += rate; // Add item rate to the total as a number
     },
 
-    // Increase the quantity of a specific product in the cart
+    // Increase the quantity of an item
     increaseQuantity: (state, action) => {
-      const index = action.payload;  // Index of the product to increase quantity
-      state.cart[index].quantity += 1;
-      state.total += Number(state.cart[index].rate);  // Update the total price
-    },
-
-    // Decrease the quantity of a specific product in the cart
-    decreaseQuantity: (state, action) => {
-      const index = action.payload;  // Index of the product to decrease quantity
-      if (state.cart[index].quantity > 1) {
-        // If quantity is greater than 1, simply decrease the quantity and update the total
-        state.cart[index].quantity -= 1;
-        state.total -= Number(state.cart[index].rate);
-      } else {
-        // If quantity is 1, remove the product from the cart and update the total
-        state.total -= Number(state.cart[index].rate);
-        state.cart.splice(index, 1);
+      const item = state.cart[action.payload];
+      if (item) {
+        item.quantity += 1;
+        state.total += Number(item.rate); // Update total as a numerical value
       }
     },
 
-    // Clear the entire cart
-    clearCart: (state) => {
-      state.cart = [];  // Reset the cart array
-      state.total = 0;  // Reset the total price
+    // Decrease the quantity of an item or remove it if quantity reaches zero
+    decreaseQuantity: (state, action) => {
+      const item = state.cart[action.payload];
+      const rate = Number(item.rate);
+
+      if (item && item.quantity > 1) {
+        item.quantity -= 1;
+        state.total -= rate; // Deduct item rate from total as a number
+      } else if (item && item.quantity === 1) {
+        // Remove item from cart if quantity reaches zero
+        state.total -= rate; // Deduct rate from total before removing the item
+        state.cart.splice(action.payload, 1);
+      }
     },
   },
 });
 
-// Export actions so they can be dispatched from your components
-export const { addToCart, increaseQuantity, decreaseQuantity, clearCart } = cartSlice.actions;
-
-// Export the reducer to be included in the store
+export const { addToCart, increaseQuantity, decreaseQuantity } = cartSlice.actions;
 export default cartSlice.reducer;
